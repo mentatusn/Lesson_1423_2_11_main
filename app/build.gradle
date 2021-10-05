@@ -16,7 +16,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    signingConfigs{
+    signingConfigs {
         Properties properties = new Properties()
         properties.load(rootProject.file("password.properties").newDataInputStream())
         def password = properties.getProperty("password")
@@ -27,7 +27,13 @@ android {
             keyPassword = password
         }
 
-        notest2 {
+        company1 {
+            storeFile file("new_1423.jks") // FIXME в ДЗ нужно вынести в файл
+            storePassword = password
+            keyAlias "alias_1423" // FIXME в ДЗ нужно вынести в файл
+            keyPassword = password
+        }
+        company2 {
             storeFile file("new_1423.jks") // FIXME в ДЗ нужно вынести в файл
             storePassword = password
             keyAlias "alias_1423" // FIXME в ДЗ нужно вынести в файл
@@ -38,27 +44,42 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.release
-            minifyEnabled false
+            minifyEnabled true
             multiDexEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             versionNameSuffix 'release'
-            buildConfigField "String","BUILD_TYPE",'"RELEASE"'
+            buildConfigField "String", "BUILD_TYPE", '"RELEASE"'
+            buildConfigField "int", "field1", '2'
         }
 
 
-        notest{
+        notest {
+            manifestPlaceholders testPlaceholder: 'testValue' // FIXME посмотреть что это такоe
             multiDexEnabled true
             minifyEnabled true
             versionNameSuffix 'notest'
-            buildConfigField "String","BUILD_TYPE",'"NOTEST"'
+            buildConfigField "String", "BUILD_TYPE", '"NOTEST"'
+            buildConfigField "int", "field1", '1'
         }
-        notest2{
-            signingConfig signingConfigs.notest2
+        company1 {
+            signingConfig signingConfigs.company1
             //initWith debug
             multiDexEnabled true
-            minifyEnabled true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             versionNameSuffix 'notest2'
-            buildConfigField "String","BUILD_TYPE",'"NOTEST2"'
+            buildConfigField "String", "BUILD_TYPE", '"NOTEST2"'
+            buildConfigField "int", "field1", '3'
+        }
+        company2 {
+            signingConfig signingConfigs.company2
+            //initWith debug
+            multiDexEnabled true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            versionNameSuffix 'notest2'
+            buildConfigField "String", "BUILD_TYPE", '"NOTEST2"'
+            buildConfigField "int", "field1", '4'
         }
 
     }
