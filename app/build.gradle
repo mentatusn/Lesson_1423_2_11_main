@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 30
 
     defaultConfig {
-        applicationId "ru.geekbrains.lesson_1423_2_11_main"
+        applicationId "ru.geekbrains.lesson_1423_2_12_main"
         minSdk 24
-        targetSdk 31
+        targetSdk 30
         versionCode 1
         versionName "1.0"
 
@@ -44,7 +44,7 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.release
-            minifyEnabled true
+            minifyEnabled false
             multiDexEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             versionNameSuffix 'release'
@@ -52,34 +52,8 @@ android {
             buildConfigField "int", "field1", '2'
         }
 
+        debug{
 
-        notest {
-            manifestPlaceholders testPlaceholder: 'testValue' // FIXME посмотреть что это такоe
-            multiDexEnabled true
-            minifyEnabled true
-            versionNameSuffix 'notest'
-            buildConfigField "String", "BUILD_TYPE", '"NOTEST"'
-            buildConfigField "int", "field1", '1'
-        }
-        company1 {
-            signingConfig signingConfigs.company1
-            //initWith debug
-            multiDexEnabled true
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            versionNameSuffix 'notest2'
-            buildConfigField "String", "BUILD_TYPE", '"NOTEST2"'
-            buildConfigField "int", "field1", '3'
-        }
-        company2 {
-            signingConfig signingConfigs.company2
-            //initWith debug
-            multiDexEnabled true
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            versionNameSuffix 'notest2'
-            buildConfigField "String", "BUILD_TYPE", '"NOTEST2"'
-            buildConfigField "int", "field1", '4'
         }
 
     }
@@ -90,6 +64,31 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    flavorDimensions 'version', 'adult'
+    productFlavors {
+        free {
+            dimension 'version'
+        }
+        pro {
+            dimension 'version'
+        }
+        '3+' {
+            dimension 'adult'
+        }
+        '18+' {
+            dimension 'adult'
+        }
+    }
+
+   /* sourceSets {
+        prod {
+            java.srcDirs('src/non-mock/java')
+        }
+        dev {
+            java.srcDirs('src/non-mock/java')
+        }
+    }*/
 }
 
 dependencies {
