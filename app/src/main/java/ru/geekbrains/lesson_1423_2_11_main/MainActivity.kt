@@ -10,7 +10,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-       // findViewById<TextView>(R.id.textView).text =  "Здравствуйте company2"
+        findViewById<TextView>(R.id.textView).text =  getString(R.string.app_name)
         when(getString(R.string.app_name)){
             "PRO 18+ content"->{
             }
